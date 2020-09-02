@@ -1,0 +1,117 @@
+def acceptSet(A,str):
+    n=int(input("Enter Total Number of students playing %s : "%str))
+    for i in range(n):
+        name=input("Enter name of student %d: "%(i+1))
+ 	flag=searchSet(A,name)
+        if(flag==0):
+        A.append(name)
+        else:
+            print("Duplicate found....")
+    print("Information entered successfully...")
+
+def displaySet(A,str):
+    n=len(A)
+    print("Students who play %s : { "%str,end=" ")
+    for i in range(n-1):
+        print(A[i],end=', ')
+        
+    print(" %s }"%A[n-1])
+
+def searchSet(A,x):                         
+    n=len(A)
+    for i in range(n):
+        if(A[i]==x):
+            return (1)
+    return (0)
+        
+
+def intersectionSet(A,B,C):
+    for i in range(len(A)):
+        flag=searchSet(B,A[i])
+        if(flag==1):
+            C.append(A[i])
+def unionSet(A,B,C):
+    for i in range(len(A)):
+        C.append(A[i])
+    for i in range(len(B)):
+        flag=searchSet(A,B[i])
+        if(flag==0):
+            C.append(B[i])
+def differenceSet(A,B,C):
+    for i in range(len(A)):
+        flag=searchSet(B,A[i])
+        if(flag==0):
+            C.append(A[i])
+           
+
+
+
+def main():
+    group_A=[]  
+    group_B=[]
+    group_C=[]
+
+    while True:
+        
+        print ("\t1.Accept the Information")
+        print ("\t2.List of students who play both cricket and badminton")
+        print ("\t3.List of students who play either cricket or badminton but not both")
+        print ("\t4.Number of students who play neither cricket nor badminton")
+        print ("\t5.Number of students who play cricket and football but not badminton")
+        print ("\t6.Exit")
+        ch=int(input("Enter your choice :"))
+        R=[]
+        if(ch==6):
+            print("End of Program...")
+            break
+        elif(ch==1):
+            acceptSet(group_A,"Cricket")
+            acceptSet(group_B,"Badminton")
+            acceptSet(group_C,"Football")
+            displaySet(group_A,"Cricket")
+            displaySet(group_B,"Badminton")
+            displaySet(group_C,"Football")
+        elif(ch==2):
+            displaySet(group_A,"Cricket")
+            displaySet(group_B,"Badminton")
+            displaySet(group_C,"Football")
+            intersectionSet(group_A,group_B,R)
+            displaySet(R,"both cricket and badminton")
+
+        elif(ch==3):
+            displaySet(group_A,"Cricket")
+            displaySet(group_B,"Badminton")
+            displaySet(group_C,"Football")
+            R1=[]
+            unionSet(group_A,group_B,R1)
+            R2=[]
+            intersectionSet(group_A,group_B,R2)
+            differenceSet(R1,R2,R)
+            displaySet(R,"play either cricket or badminton but not both")
+        elif(ch==4):
+            displaySet(group_A,"Cricket")
+            displaySet(group_B,"Badminton")
+            displaySet(group_C,"Football")
+            R1=[]
+            unionSet(group_A,group_B,R1)
+            differenceSet(group_C,R1,R)
+            displaySet(R,"students who play neither cricket nor badminton")
+            R=len(R)
+            print("Number of students who play neither cricket nor badminton :",R)
+        elif(ch==5):
+            displaySet(group_A,"Cricket")
+            displaySet(group_B,"Badminton")
+            displaySet(group_C,"Football")
+            R1=[]
+            intersectionSet(group_A,group_C,R1)
+            differenceSet(R1,group_B,R)
+            displaySet(R,"students who play cricket and football but not badminton")
+            R=len(R)
+            print("Number of students who play neither cricket nor badminton :",R)
+
+        else:
+            print("Invalid choice")
+
+
+main()
+quit()
